@@ -1,0 +1,615 @@
+/* NEW CC 3.5 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
+
+
+//============================================================
+
+//REGRAS START
+void showRegras(){
+	system("mode con:cols=80 lines=40"); // <-- Aumentar prompt de comando
+	printf("\n\t\t\t\t    REGRAS\n");
+	printf("\n\t\tLimpe as camadas do tabuleiro e ganhe o jogo.\n");
+	printf("\n\t      Nao %c poss%cvel mover as camadas, apenas os doces.\n\n",130,161);
+	printf("\t \t\t\t 3 Camadas = %c\n\n",157);
+	printf("\t\t \t\t 2 Camadas = Q\n\n");
+	printf("\t\t \t\t 1 Camada  = O\n\n");
+	printf("\t\t\t\tSem camada = * $ #\n");
+	printf("\n\n\t\t\t");
+	system ("pause");
+	system ("cls");
+}
+//REGRAS END
+
+//============================================================
+
+//FIRST START
+void montaprimeira(int pesos[9][9])
+{
+	int l1,c1,guia;
+	srand(time(NULL)); 
+	
+	
+	
+    for(l1 = 0;l1 < 8;l1++){              
+       for(c1 = 0;c1 < 8; c1++){
+       	
+         pesos[l1][c1]=1+(rand() %4);
+         
+        }}
+}
+//FIRST END
+
+//============================================================
+
+//MATRIZ VISÍVEL START
+void mostraCANDY(int pesos[9][9])
+{
+
+    int linha, coluna, aleatorio, guia;
+	
+	HANDLE  hConsole; /*<< HANDLE: A handle to an object. "Declarando" o uso do hConsole. A console process uses handles to access the input and screen buffers of its console. */
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE); /*GetStdHandle = Retrieves a handle for the standard input, standard output, or standard error device.*/
+	
+	printf("\t\t       ");
+for(guia=0;guia<8;guia++){
+	printf("%d  ",guia+1);
+	}
+		printf("\n\n\n\n");
+		
+        for(linha=0 ; linha < 8 ; linha++ ){
+        	SetConsoleTextAttribute(hConsole, 7); /*	SetConsoleTextAttribute = Sets the foreground (text) and background color attributes of characters written to the console screen buffer.*/
+			printf("\t\t%d      ",linha+1);
+            for(coluna=0 ; coluna < 8 ; coluna++ ){
+                if(pesos[linha][coluna]==1){
+					SetConsoleTextAttribute(hConsole, 2);
+					printf("*  ");
+				} 
+				if(pesos[linha][coluna]==2){
+                    SetConsoleTextAttribute(hConsole, 3);
+					printf("$  ");
+                }
+				if(pesos[linha][coluna]==3){
+                    SetConsoleTextAttribute(hConsole, 6);
+					printf("#  ");
+                }
+                if(pesos[linha][coluna]==6){
+                    SetConsoleTextAttribute(hConsole, 14);
+					printf("O  ");
+                }
+				if(pesos[linha][coluna]==5){
+                    SetConsoleTextAttribute(hConsole, 10);
+					printf("Q  ");
+                }
+				if(pesos[linha][coluna]==4){
+                    SetConsoleTextAttribute(hConsole, 12);
+					printf("%c  ",157);
+					
+                }
+			if(coluna==7){
+         	printf("\n\n");
+         }
+            }
+        }
+        SetConsoleTextAttribute(hConsole, 7);
+		printf("\n");
+		}
+//MATRIZ VISÍVEL END
+
+//============================================================
+
+//FUNÇÃO MUDAR DOCES START
+
+void mudar(int pesos[9][9]){
+	int l1, c1, i, aux1,aux2,jafoi=0;
+	
+for(l1 = 0;l1 < 8; l1++){
+for(c1 = 0;c1 < 8; c1++){
+//(ex:Usando l1=1) START
+
+jafoi=0;
+ if(pesos[l1][c1] == pesos[(l1+1)][c1] && pesos[(l1)][c1] == pesos[(l1+2)][c1]){
+//--------------------------------Estourar doces:
+aux1=pesos[l1+2][c1];
+aux2=pesos[l1-1][c1];
+if(l1+2>8){
+	aux1=1+(rand()%3);
+}
+if(l1-1<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1+2][c1]=aux2;
+pesos[l1-1][c1]=aux1;
+//------------------------
+aux1=pesos[l1+1][c1];
+aux2=pesos[l1-2][c1];
+if(l1+1>8){
+	aux1=1+(rand()%3);
+}
+if(l1-2<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1+1][c1]=aux2;
+pesos[l1-2][c1]=aux1;
+//------------------------
+aux1=pesos[l1][c1];
+aux2=pesos[l1-3][c1];
+if(l1>8){
+	aux1=1+(rand()%3);
+}
+if(l1-3<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1][c1]=aux2;
+pesos[l1-3][c1]=aux1;
+jafoi=1;
+}
+
+//--------------------------
+//(ex:Usando l1=1)END
+
+//(ex:Usando l1=2) START
+ if(pesos[l1][c1] == pesos[(l1+1)][c1] && pesos[(l1)][c1] == pesos[(l1-1)][c1]){
+//--------------------------------Estourar doces:
+aux1=pesos[l1-1][c1];
+aux2=pesos[l1-4][c1];
+if(l1-1<0){
+	aux1=1+(rand()%3);
+}
+if(l1-4<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1-1][c1]=aux2;
+pesos[l1-4][c1]=aux1;
+//------------------------
+aux1=pesos[l1+1][c1];
+aux2=pesos[l1-2][c1];
+if(l1+1>8){
+	aux1=1+(rand()%3);
+}
+if(l1-3<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1+1][c1]=aux2;
+pesos[l1-3][c1]=aux1;
+//------------------------
+aux1=pesos[l1][c1];
+aux2=pesos[l1-3][c1];
+if(l1>8){
+	aux1=1+(rand()%3);
+}
+if(l1-3<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1][c1]=aux2;
+pesos[l1-3][c1]=aux1;
+jafoi=1;
+}
+
+//--------------------------
+//(ex:Usando l1=2)END
+
+
+//(ex:Usando l1=3) START
+if(jafoi==0){
+if(pesos[l1][c1] == pesos[(l1-1)][c1] && pesos[(l1)][c1] == pesos[(l1-2)][c1]){
+//--------------------------------Estourar doces:
+aux1=pesos[l1-2][c1];//normal
+aux2=pesos[l1-5][c1];
+if(l1-2<0){
+	aux1=1+(rand()%3);
+}
+if(l1-5<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1-2][c1]=aux2;
+pesos[l1-5][c1]=aux1;
+//--------------------------------
+aux1=pesos[l1-1][c1];//normal
+aux2=pesos[l1-4][c1];
+if(l1-1<0){
+	aux1=1+(rand()%3);
+}
+if(l1-4<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1-1][c1]=aux2;
+pesos[l1-4][c1]=aux1;
+//------------------------------------
+aux1=pesos[l1][c1];//normal
+aux2=pesos[l1-3][c1];
+if(l1<0){
+	aux1=1+(rand()%3);
+}
+if(l1-3<0){
+	aux2=1+(rand()%3);
+}
+pesos[l1][c1]=aux2;
+pesos[l1-3][c1]=aux1;
+}}
+
+}}
+
+}
+//(ex:Usando l1=3) END
+
+	
+//FUNÇÃO MUDAR DOCES END
+
+//============================================================
+
+//FUNÇÃO ESCREVE TELA START
+
+void escrever(int mudaesc){
+	int v, d;
+	HANDLE  hConsole;
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	if(mudaesc==1){
+	
+		SetConsoleTextAttribute(hConsole, 7);
+		printf("\n\t          ");
+		printf("C A N D Y  C R U S H ");
+		Beep(659,120);
+	}
+		
+	
+	
+	if(mudaesc==0){
+			for(v=0;v<80;v++){
+     	Sleep(10);	
+        printf("%c",177);
+        }
+		for(v=0;v<1;v++){
+	printf("\n\n\n");
+	printf("\n\tG");Sleep(200);
+	printf("\tA");Sleep(200);
+	printf("\tM");Sleep(200);
+	printf("\tE");Sleep(200);
+	printf("\t-");Sleep(200);
+	printf("\tO");Sleep(200);
+	printf("\tV");Sleep(200);
+	printf("\tE");Sleep(200);
+	printf("\tR\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+ }}
+ 
+ printf("\n\n\n");
+ system ("pause");
+ system("cls");
+ }
+//FUNÇÃO ESCREVE TELA END
+
+//============================================================
+
+//FUNÇÃO ESCOLHA START
+
+void escolha(int *l1,int *c1,int *l2,int *c2,int pesos[9][9], int *check){
+	int i,sair,h,longe=0;
+	
+	
+	do{
+		
+//escolha 1 START
+	    do{
+       	sair=0;
+        printf("Escolha uma LINHA entre 1 e 8 >\n");
+        scanf("%d",&*l1);
+        Beep(783,200);
+        if(*l1==1 || *l1==2 || *l1==3 || *l1==4 || *l1==5 || *l1==6 || *l1==7 || *l1==8){
+		sair=1;
+
+		}
+		else{
+			printf("Errado tente de novo\n");
+			Beep(622,150);Beep(622,150);Beep(622,150);
+		}}while(sair!=1);
+		
+		do{
+		sair=0;
+        printf("Escolha uma COLUNA entre 1 e 8>\n");
+        scanf("%d", &*c1);
+        Beep(783,200);
+		if(*c1==1 || *c1==2 || *c1==3 || *c1==4 || *c1==5 || *c1==6 || *c1==7 || *c1==8){
+        	sair=1;
+        }
+        else{
+        	printf("Errado tente de novo\n");
+        	Beep(622,150);Beep(622,150);Beep(622,150);
+        }}while(sair!=1);
+      	*l1=(*l1-1);
+        *c1=(*c1-1);
+        		
+//escolha 1 end
+		
+//escolha 2 START
+
+		do{
+       	sair=0;
+        printf("Agora escolha uma LINHA PARA TROCA entre 1 e 8 >\n");
+        scanf("%d", &*l2);
+        Beep(880,150);
+        if(*l2==1 || *l2==2 || *l2==3|| *l2==4 || *l2==5 || *l2==6 || *l2==7|| *l2==8){
+			sair=1;
+		}
+		else{
+			printf("Errado tente de novo\n");
+			Beep(622,150);Beep(622,150);Beep(622,150);
+		}}while(sair!=1);
+		
+		do{
+       	sair=0;
+        printf("Agora escolha uma COLUNA PARA TROCA entre 1 e 8 >\n");
+        scanf("%d", &*c2);
+        Beep(880,150);
+        if(*c2==1 || *c2==2 || *c2==3|| *c2==4 || *c2==5 || *c2==6 || *c2==7|| *c2==8){
+			sair=1;
+		}
+		else{
+			printf("Errado tente de novo\n");
+			Beep(622,150);Beep(622,150);Beep(622,150);
+		}}while(sair!=1);
+		*l2=*l2-1;
+        *c2=*c2-1;
+        
+	//escolha 2 END  
+		
+	//checagem START
+	
+		if(pesos[*l1][*c1]==6 || pesos[*l1][*c1]==5 || pesos[*l1][*c1]==4 || pesos[*l2][*c2]==6 || pesos[*l2][*c2]==5 || pesos[*l2][*c2]==4){
+        	printf("\nMovimento ilegal\n\n");
+        	Beep(622,150);Beep(622,150);Beep(622,150);
+        	system ("pause");
+			system ("cls");
+			mostraCANDY(pesos);
+        	continue;
+        }
+        
+		if(*l2!=*l1){
+			
+		if(*l2==*l1+1 || *l2==*l1-1){
+		//certo!
+		longe=1;
+		}
+		else{
+			printf("\nNumeros distantes, tente de novo\n\n");
+			Beep(622,150);Beep(622,150);Beep(622,150);
+			system ("pause");
+			system ("cls");
+			mostraCANDY(pesos);
+			continue;	
+			}
+		
+		}	
+		
+		if(*l2==*l1){
+		if(*c2==(*c1-1) || *c2==(*c1+1)){
+		longe=1; //certo!
+		}
+		
+		else{
+			if(*c2==*c1){
+		printf("Numero repetido, tente de novo\n\n");
+		Beep(622,150);Beep(622,150);Beep(622,150);
+			system ("pause");
+			system ("cls");
+			mostraCANDY(pesos);
+			continue;
+		}
+		else{
+			printf("Numeros distantes, tente de novo\n\n");
+			Beep(622,150);Beep(622,150);Beep(622,150);
+			system ("pause");
+			system ("cls");
+			mostraCANDY(pesos);
+			continue;
+		}
+		}}
+
+
+				
+	//checagem END
+		
+        }while(longe==0);
+        *check=1;
+		}
+		
+   		
+//FUNÇÃO ESCOLHA END
+
+//============================================================
+
+
+//-----------------------------------------------------------------------
+
+//FUNÇÃO PRINCIPAL START
+int main(){
+    
+	 int pesos[9][9];
+     
+     struct ranked{
+     char nome[100];
+     int pontos;
+	 int rank;  
+  	 };
+  
+    struct ranked player; /* <<< camada é a variável do struct criado */
+    
+    int l1, c1, l2, c2, orig, troc, end=0, jogadas=0, contfim=0,pontos=0,check=0;
+	int mudaesc;
+    player.pontos=0;
+	srand(time(NULL));  /* <<<Função para numero aleatório*/
+	system("mode con:cols=110 lines=30"); /* <<<Função para tamanho do prompt*/
+	showRegras();
+
+	montaprimeira(pesos);
+
+	FILE *fp;
+       fp=fopen("pts.txt","a");
+       
+       if(fp == NULL)
+       {   printf("Erro ao abrir arquivo");
+          
+       }
+
+	do{
+	 	
+//IMPRIMIR MATRIZ START
+		
+   		mostraCANDY(pesos);
+
+//IMPRIMIR MATRIZ END
+
+//Escolha + recheck START
+
+	do{
+        escolha(&l1,&c1,&l2,&c2,pesos,&check);
+
+//Escolha END
+
+//RECHECK START
+		orig=pesos[l1][c1];
+        troc=pesos[l2][c2];
+
+        pesos[l1][c1]=troc;
+        pesos[l2][c2]=orig;
+   		system ("pause");
+		system ("cls");
+
+    	mostraCANDY(pesos);
+        
+if(pesos[l1][c1] == pesos[(l1+1)][c1] && pesos[l1][c1] == pesos[(l1+2)][c1]){
+	printf("Certo\n");//l1
+	check=0;
+	}else{
+		if(pesos[l1][c1] == pesos[(l1-1)][c1] && pesos[l1][c1] == pesos[(l1-2)][c1]){
+		printf("Certo\n");//l1
+		check=0;
+	}else{
+		if(pesos[l1][c1] == pesos[(l1-1)][c1] && pesos[l1][c1] == pesos[(l1+1)][c1]){
+			printf("Certo\n");//l1
+			check=0;
+	}else{
+		if(pesos[l2][c2] == pesos[(l2+1)][c2] && pesos[l2][c2] == pesos[(l2+2)][c2]){
+		printf("Certo\n"); //l2
+		check=0;
+	}else{
+		if(pesos[l2][c2] == pesos[(l2-1)][c2] && pesos[l2][c2] == pesos[(l2-2)][c2]){
+		printf("Certo\n"); //l2
+		check=0;
+	}else{
+		if(pesos[l2][c2] == pesos[(l2-1)][c2] && pesos[l2][c2] == pesos[(l2+1)][c2]){
+		printf("Certo\n"); //l2
+		check=0;
+	}else{
+		if(pesos[l1][c1] == pesos[(l1)][c1+1] && pesos[l1][c1] == pesos[(l1)][c1+2]){
+			printf("Certo\n");//c1
+			check=0;
+	}else{
+		if(pesos[l1][c1] == pesos[(l1)][c1-1] && pesos[l1][c1] == pesos[(l1)][c1-2]){
+			printf("Certo\n"); //c1
+			check=0;
+	}else{
+		if(pesos[l1][c1] == pesos[(l1)][c1+1] && pesos[l1][c1] == pesos[(l1)][c1-1]){
+			printf("Certo\n");//c1
+			check=0; 
+	}else{
+		if(pesos[l2][c2] == pesos[(l2)][c2+1] && pesos[l2][c2] == pesos[(l2)][c2+2]){
+		printf("Certo\n"); //c2
+		check=0;
+	}else{
+		if(pesos[l2][c2] == pesos[(l2)][c2-1] && pesos[l2][c2] == pesos[(l2)][c2-2]){
+		printf("Certo\n"); //c2
+		check=0;
+	}else{
+		if(pesos[l2][c2] == pesos[(l2)][c2+1] && pesos[l2][c2] == pesos[(l2)][c2-1]){
+		printf("Certo\n"); //c2
+		check=0;
+}else{ //last else
+
+	printf("Sequencia incorreta, tente de novo\n\n");
+	Beep(622,150);Beep(622,150);Beep(622,150);
+	
+	orig=pesos[l1][c1];
+    troc=pesos[l2][c2];
+    pesos[l1][c1]=troc;
+    pesos[l2][c2]=orig;
+      	
+	system ("pause");
+	system ("cls");
+	mostraCANDY(pesos);
+			}
+
+}}}}}}}}}}}
+}while(check==1);
+
+//RECHECK END
+
+       
+
+      
+         
+//MUDAR + contagem pontos START
+
+	mudar(pesos);
+
+// MUDAR + contagem pontos END
+	
+	
+	
+		 
+//Escreve start		          
+	mudaesc=1;
+	escrever(mudaesc);
+//escreve end
+    
+//MONTAGEM 2 START
+	mostraCANDY(pesos);
+	
+//MONTAGEM 2 END
+        
+		 jogadas++;
+		 contfim=5-jogadas;
+		 if(contfim!=0){
+		 //Sleep(250);
+		 printf("\t\t    Faltam %d jogadas\n",contfim);
+		 printf("\n\t\t   Voc%c tem %d PONTOS\n\n", 136,player.pontos);
+	}
+	if(contfim==0){
+		printf("\t\t    Acabaram as jogadas\n");
+		printf("\n\t\t    Voc%c tem %d PONTOS\n\n", 136,player.pontos);
+		}
+		 system ("pause");
+         system("cls");
+
+
+}while(jogadas<5);
+
+//NOME RANK TXT START
+
+		printf("\nDigite seu nome: \n\n");
+		fflush(stdin);
+		fgets(player.nome,100,stdin);////ou gets(nome),sempre usando o fflush(stdin)!
+		
+		fprintf(fp,"\n\nJOGADOR: %s\n",player.nome);
+	    printf(" TOTAL DE PONTOS:  %d \n",player.pontos);
+        fprintf(fp," TOTAL DE PONTOS> %d \n",player.pontos);
+        
+//NOME RANK TXT END
+
+//GAME OVER START
+
+    mudaesc=0;
+	escrever(mudaesc);
+	
+//GAME OVER END
+
+	   fclose(fp);
+ 
+       system("pts.txt");
+	   system("pause");
+	   
+   return 0;
+  }   
