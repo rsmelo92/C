@@ -1,4 +1,4 @@
-# C
+# "Candy Crush" in C
 
 Code made for a programming class in Unifacs University;
 
