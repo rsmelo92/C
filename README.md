@@ -1,9 +1,12 @@
-# "Candy Crush" in C
+# "Candy Crush" em C
 
-Code made for a programming class in Unifacs University;
+Código feito pra matéria da faculdade onde tínhamos que fazer o jogo Candy Crush em C
 
-The objective was to make a Candy Crush in C;
+Fiz uma matriz "invisível" de números que não era printada e em cima dela fiz uma matriz visível de símbolos printada.
+Quando os números ficam iguais em linha ou coluna eles somem e novos números são escolhidos aleatoriamente.
+Como cada símbolo está associado a um número, quando os números mudam os símbolos também mudam.
 
-I couldn't find the final version(which was v4.0), so I uploaded the last that I could find v3.5;
+Ao final dos rounds aparece sua pontuação na tela e ela é escrita em um txt junto com seu nome criando um Ranking de jogadores.
 
-That said, there is a lot of bugs.
+
+(obs: Essa é a versão 3.5, a versão final é a 4.0, mas não foi encontrada, por isso tem alguns bugs ainda.)
